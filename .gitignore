@@ -1,0 +1,16 @@
+node_modules/
+.tmp/
+dist/
+.api/
+*.pbiviz
+*.pfx
+*.cer
+*.crt
+*.key
+*.pem
+*.log
+npm-debug.log*
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
