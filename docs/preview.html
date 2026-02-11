@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>From-To Filter Preview</title>
+  <link rel="stylesheet" href="./preview.css">
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <header class="card-header">
+        <h1>From-To Filter</h1>
+        <p>Static visual mock for expected Power BI control appearance</p>
+      </header>
+
+      <div class="range-filter-container" role="group" aria-label="From-To period range">
+        <div class="filter-group">
+          <label for="from">Min Period</label>
+          <div class="select-control">
+            <span class="select-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </span>
+            <select id="from" aria-label="Min Period">
+              <option>Jan 2024</option>
+              <option selected>Feb 2024</option>
+              <option>Mar 2024</option>
+              <option>Apr 2024</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label for="to">Max Period</label>
+          <div class="select-control">
+            <span class="select-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </span>
+            <select id="to" aria-label="Max Period">
+              <option>Apr 2024</option>
+              <option>May 2024</option>
+              <option selected>Jun 2024</option>
+              <option>Jul 2024</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <section class="result" aria-label="Example selected interval">
+        <span class="pill">Selected Range</span>
+        <strong>Feb 2024 → Jun 2024</strong>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
