@@ -24,10 +24,9 @@
 
 .select-control {
   position: relative;
-  width: 240px; // dopasuj jeśli chcesz szersze
+  width: 240px;
   height: 44px;
 
-  // strzałka po prawej (chevron)
   &::after {
     content: "";
     position: absolute;
@@ -50,7 +49,6 @@
     transform: translateY(-50%);
     pointer-events: none;
 
-    // prosta ikonka kalendarza (SVG jako background)
     background-repeat: no-repeat;
     background-size: 22px 22px;
     background-image: url("data:image/svg+xml;utf8,\
@@ -70,15 +68,13 @@
     border-radius: 6px;
     background: #fff;
 
-    // miejsce na ikonę i strzałkę
     padding-left: 44px;
     padding-right: 44px;
 
     font-size: 20px;
     font-weight: 600;
-    color: #2e7d32; // zielony jak na screenie
+    color: #2e7d32;
 
-    // ukrycie natywnej strzałki
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;

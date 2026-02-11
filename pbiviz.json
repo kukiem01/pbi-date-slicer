@@ -1,12 +1,12 @@
 {
     "visual": {
         "name": "rangeStringFilter",
-        "displayName": "RangeStringFilter",
+        "displayName": "From-To Filter",
         "guid": "rangeStringFilter8014372F35B04FF1BFDA10716F78E31B",
         "visualClassName": "Visual",
-        "version": "1.0.0.0",
+        "version": "1.0.0.1",
         "description": "Visualization to filter string categories by range selection.",
-        "supportUrl": "google.com",
+        "supportUrl": "https://github.com/kukiem01/pbi-date-slicer/",
         "gitHubUrl": ""
     },
     "apiVersion": "5.3.0",
