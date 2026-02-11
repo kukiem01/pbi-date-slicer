@@ -63,22 +63,36 @@ export const RangeFilterComponent: React.FC<Props> = ({ options, onSelectionChan
 
     return (
         <div className="range-filter-container">
-            <div className="filter-group">
-                <label>From:</label>
-                <select value={fromIndex} onChange={handleFromChange}>
-                    {options.map(o => (
-                        <option key={o.index} value={o.index}>{o.label}</option>
-                    ))}
-                </select>
-            </div>
-            <div className="filter-group">
-                <label>To:</label>
-                <select value={toIndex} onChange={handleToChange}>
-                    {availableToOptions.map(o => (
-                        <option key={o.index} value={o.index}>{o.label}</option>
-                    ))}
-                </select>
-            </div>
-        </div>
+  <div className="filter-group">
+    <label>Min Period</label>
+
+    <div className="select-control">
+      <span className="select-icon" aria-hidden="true" />
+      <select value={fromIndex} onChange={handleFromChange}>
+        {options.map((o) => (
+          <option key={o.index} value={o.index}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  </div>
+
+  <div className="filter-group">
+    <label>Max Period</label>
+
+    <div className="select-control">
+      <span className="select-icon" aria-hidden="true" />
+      <select value={toIndex} onChange={handleToChange}>
+        {availableToOptions.map((o) => (
+          <option key={o.index} value={o.index}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  </div>
+</div>
+
     );
 };
