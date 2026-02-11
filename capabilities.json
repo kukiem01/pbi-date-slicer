@@ -1,9 +1,8 @@
 {
   "dataRoles": [
-  { "displayName": "Period Text", "name": "category", "kind": "Grouping" },
-  { "displayName": "Sorting Index", "name": "sortIndex", "kind": "Grouping" }
-]
-,
+    { "displayName": "Period Text", "name": "category", "kind": "Grouping" },
+    { "displayName": "Sorting Index", "name": "sortIndex", "kind": "Grouping" }
+  ],
   "objects": {
     "general": {
       "displayName": "General",
@@ -14,22 +13,166 @@
           }
         }
       }
-    }
-  },
-"dataViewMappings": [
-  {
-    "categorical": {
-      "categories": {
-        "select": [
-          { "for": { "in": "category" } },
-          { "for": { "in": "sortIndex" } }
-        ],
-        "dataReductionAlgorithm": { "top": {} }
+    },
+    "labels": {
+      "displayName": "Labels",
+      "properties": {
+        "minLabelText": {
+          "type": {
+            "text": true
+          }
+        },
+        "maxLabelText": {
+          "type": {
+            "text": true
+          }
+        },
+        "labelFontFamily": {
+          "type": {
+            "formatting": {
+              "fontFamily": true
+            }
+          }
+        },
+        "labelFontSize": {
+          "type": {
+            "formatting": {
+              "fontSize": true
+            }
+          }
+        },
+        "labelColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "controls": {
+      "displayName": "Controls",
+      "properties": {
+        "valueFontFamily": {
+          "type": {
+            "formatting": {
+              "fontFamily": true
+            }
+          }
+        },
+        "valueFontSize": {
+          "type": {
+            "formatting": {
+              "fontSize": true
+            }
+          }
+        },
+        "valueColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "controlBackgroundColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "controlBorderColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "accentColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "borderRadius": {
+          "type": {
+            "numeric": true
+          }
+        },
+        "controlHeight": {
+          "type": {
+            "numeric": true
+          }
+        }
+      }
+    },
+    "layout": {
+      "displayName": "Layout",
+      "properties": {
+        "showIcon": {
+          "type": {
+            "bool": true
+          }
+        },
+        "controlWidth": {
+          "type": {
+            "numeric": true
+          }
+        },
+        "groupGap": {
+          "type": {
+            "numeric": true
+          }
+        },
+        "containerHorizontalPadding": {
+          "type": {
+            "numeric": true
+          }
+        },
+        "containerVerticalPadding": {
+          "type": {
+            "numeric": true
+          }
+        },
+        "containerBackgroundColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        }
       }
     }
-  }
-]
-
-,
-  "privileges": []
+  },
+  "dataViewMappings": [
+    {
+      "categorical": {
+        "categories": {
+          "select": [
+            { "for": { "in": "category" } },
+            { "for": { "in": "sortIndex" } }
+          ],
+          "dataReductionAlgorithm": { "top": {} }
+        }
+      }
+    }
+  ],
+  "tooltips": {},
+  "privileges": [],
+  "supportsKeyboardFocus": true,
+  "supportsLandingPage": true,
+  "supportsSynchronizingFilterState": true
 }

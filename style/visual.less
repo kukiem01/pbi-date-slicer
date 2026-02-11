@@ -1,31 +1,55 @@
 .range-filter-container {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-  align-items: flex-start;
+  --rf-label-font-family: "Segoe UI", wf_segoe-ui_normal, helvetica, arial, sans-serif;
+  --rf-label-font-size: 14px;
+  --rf-label-color: #111;
+  --rf-value-font-family: "Segoe UI", wf_segoe-ui_normal, helvetica, arial, sans-serif;
+  --rf-value-font-size: 16px;
+  --rf-value-color: #2e7d32;
+  --rf-control-bg: #fff;
+  --rf-control-border: #d8d8d8;
+  --rf-accent-color: #2e7d32;
+  --rf-border-radius: 6px;
+  --rf-control-height: 44px;
+  --rf-control-width: 220px;
+  --rf-group-gap: 16px;
+  --rf-container-horizontal-padding: 0;
+  --rf-container-vertical-padding: 0;
+  --rf-container-background: transparent;
 
-  font-family: "Segoe UI", wf_segoe-ui_normal, helvetica, arial, sans-serif;
-  color: #111;
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: var(--rf-group-gap);
+  padding: var(--rf-container-vertical-padding) var(--rf-container-horizontal-padding);
+  background: var(--rf-container-background);
+  color: var(--rf-label-color);
+  overflow-x: auto;
 }
 
 .filter-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  min-width: 240px;
+  width: var(--rf-control-width);
+  min-width: var(--rf-control-width);
+  box-sizing: border-box;
 
   label {
-    font-weight: 600;
-    font-size: 18px;
+    font-family: var(--rf-label-font-family);
+    font-size: var(--rf-label-font-size);
     line-height: 1.2;
-    color: #111;
+    font-weight: 600;
+    color: var(--rf-label-color);
   }
 }
 
 .select-control {
   position: relative;
-  width: 240px;
-  height: 44px;
+  width: 100%;
 
   &::after {
     content: "";
@@ -34,9 +58,9 @@
     top: 50%;
     width: 10px;
     height: 10px;
-    transform: translateY(-50%) rotate(45deg);
-    border-right: 2px solid #111;
-    border-bottom: 2px solid #111;
+    transform: translateY(-60%) rotate(45deg);
+    border-right: 2px solid var(--rf-value-color);
+    border-bottom: 2px solid var(--rf-value-color);
     pointer-events: none;
   }
 
@@ -44,46 +68,49 @@
     position: absolute;
     left: 12px;
     top: 50%;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     transform: translateY(-50%);
     pointer-events: none;
+    color: var(--rf-accent-color);
+    z-index: 2;
 
-    background-repeat: no-repeat;
-    background-size: 22px 22px;
-    background-image: url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='%232e7d32' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\
-<rect x='3' y='4' width='18' height='18' rx='2' ry='2'/>\
-<line x1='16' y1='2' x2='16' y2='6'/>\
-<line x1='8' y1='2' x2='8' y2='6'/>\
-<line x1='3' y1='10' x2='21' y2='10'/>\
-</svg>");
+    svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
   }
 
   select {
     width: 100%;
-    height: 100%;
-
-    border: 1px solid #d8d8d8;
-    border-radius: 6px;
-    background: #fff;
-
-    padding-left: 44px;
-    padding-right: 44px;
-
-    font-size: 20px;
+    height: var(--rf-control-height);
+    box-sizing: border-box;
+    border: 1px solid var(--rf-control-border);
+    border-radius: var(--rf-border-radius);
+    background: var(--rf-control-bg);
+    padding-left: 42px;
+    padding-right: 40px;
+    font-family: var(--rf-value-font-family);
+    font-size: var(--rf-value-font-size);
     font-weight: 600;
-    color: #2e7d32;
-
+    color: var(--rf-value-color);
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-
     outline: none;
 
     &:focus {
-      border-color: #bdbdbd;
-      box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.12);
+      border-color: var(--rf-accent-color);
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12);
+    }
+
+    &.no-icon {
+      padding-left: 14px;
     }
   }
 }
