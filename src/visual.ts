@@ -4,7 +4,7 @@ import powerbi from "powerbi-visuals-api";
 import { RangeFilterComponent, RangeOption } from "./component";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import * as models from "powerbi-models"; 
+import * as models from "powerbi-models";
 
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
@@ -22,68 +22,75 @@ export class Visual implements IVisual {
     }
 
     public update(options: VisualUpdateOptions) {
-        if (!options.dataViews || !options.dataViews[0] || !options.dataViews[0].categorical) {
+        if (!options.dataViews?.[0]?.categorical) {
             this.clear();
             return;
         }
 
         const categorical = options.dataViews[0].categorical;
-        const categories = categorical.categories[0];
-        const values = categorical.values ? categorical.values[0] : null;
+        const cats = categorical.categories ?? [];
 
-        if (!categories || !values) {
+        // category = Period Text, sortIndex = Sorting Index (obie jako categories po zmianie dataViewMappings)
+        const textCategory = cats.find(c => c.source?.roles?.category);
+        const indexCategory = cats.find(c => c.source?.roles?.sortIndex);
+
+        if (!textCategory || !indexCategory) {
             this.clear();
             return;
         }
 
-        const fullQueryName = categories.source.queryName; 
-        const tableName = fullQueryName.substr(0, fullQueryName.indexOf('.'));
-        const columnName = categories.source.displayName;
+        // Filtr ma iść po kolumnie sortIndex
+        const fullQueryName = indexCategory.source.queryName;
+        const dotIdx = fullQueryName.indexOf(".");
+        const tableName = dotIdx > -1 ? fullQueryName.substring(0, dotIdx) : fullQueryName;
+        const columnName = indexCategory.source.displayName;
 
         const filterTarget: models.IFilterColumnTarget = {
             table: tableName,
             column: columnName
         };
 
+        // Unikalne po sortIndex
         const uniqueMap = new Map<number, RangeOption>();
 
-        categories.values.forEach((categoryValue, i) => {
-            const sortVal = Number(values.values[i]); 
-            
+        textCategory.values.forEach((categoryValue, i) => {
+            const sortVal = Number(indexCategory.values[i]);
+            if (Number.isNaN(sortVal)) return;
+
             if (!uniqueMap.has(sortVal)) {
+                // SelectionId budujemy na sortIndex -> cross-filter po indexach
                 const selectionId = this.host.createSelectionIdBuilder()
-                    .withCategory(categories, i)
+                    .withCategory(indexCategory, i)
                     .createSelectionId();
 
                 uniqueMap.set(sortVal, {
-                    label: categoryValue.toString(),
+                    label: String(categoryValue),
                     index: sortVal,
-                    selectionId: selectionId
+                    selectionId
                 });
             }
         });
 
         let rangeOptions = Array.from(uniqueMap.values());
-
         rangeOptions.sort((a, b) => a.index - b.index);
 
         const reactElement = React.createElement(RangeFilterComponent, {
             options: rangeOptions,
-            onSelectionChanged: (selectedValues: string[]) => {
+            onSelectionChanged: (selectedIndexes: number[]) => {
                 let filter: models.BasicFilter = null;
 
-                if (selectedValues.length > 0) {
+                if (selectedIndexes?.length > 0) {
                     filter = new models.BasicFilter(
                         filterTarget,
                         "In",
-                        selectedValues
+                        selectedIndexes
                     );
                 }
 
                 this.host.applyJsonFilter(
-                    filter, 
-                    "general", 
-                    "filter", 
+                    filter,
+                    "general",
+                    "filter",
                     powerbi.FilterAction.merge
                 );
             }

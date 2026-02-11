@@ -1,5 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import powerbi from "powerbi-visuals-api";
+
 import ISelectionId = powerbi.visuals.ISelectionId;
 
 export interface RangeOption {
@@ -10,7 +12,7 @@ export interface RangeOption {
 
 export interface Props {
     options: RangeOption[];
-    onSelectionChanged: (values: string[]) => void;
+    onSelectionChanged: (values: number[]) => void; // <-- indexy
 }
 
 export const RangeFilterComponent: React.FC<Props> = ({ options, onSelectionChanged }) => {
@@ -33,12 +35,18 @@ export const RangeFilterComponent: React.FC<Props> = ({ options, onSelectionChan
 
         if (!currentFromExists) setFromIndex(options[0].index);
         if (!currentToExists) setToIndex(options[options.length - 1].index);
-
     }, [options]);
+
+    const triggerFilter = (start: number, end: number) => {
+        const itemsToSelect = options.filter(o => o.index >= start && o.index <= end);
+        const values = itemsToSelect.map(o => o.index); // <-- zwracamy indexy
+        onSelectionChanged(values);
+    };
 
     const handleFromChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newFrom = Number(e.target.value);
         setFromIndex(newFrom);
+
         if (newFrom > toIndex) {
             setToIndex(newFrom);
             triggerFilter(newFrom, newFrom);
@@ -53,46 +61,39 @@ export const RangeFilterComponent: React.FC<Props> = ({ options, onSelectionChan
         triggerFilter(fromIndex, newTo);
     };
 
-    const triggerFilter = (start: number, end: number) => {
-        const itemsToSelect = options.filter(o => o.index >= start && o.index <= end);
-        const values = itemsToSelect.map(o => o.label);
-        onSelectionChanged(values);
-    };
-
     const availableToOptions = options.filter(o => o.index >= fromIndex);
 
     return (
         <div className="range-filter-container">
-  <div className="filter-group">
-    <label>Min Period</label>
+            <div className="filter-group">
+                <label>Min Period</label>
 
-    <div className="select-control">
-      <span className="select-icon" aria-hidden="true" />
-      <select value={fromIndex} onChange={handleFromChange}>
-        {options.map((o) => (
-          <option key={o.index} value={o.index}>
-            {o.label}
-          </option>
-        ))}
-      </select>
-    </div>
-  </div>
+                <div className="select-control">
+                    <span className="select-icon" aria-hidden="true" />
+                    <select value={fromIndex} onChange={handleFromChange}>
+                        {options.map((o) => (
+                            <option key={o.index} value={o.index}>
+                                {o.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
 
-  <div className="filter-group">
-    <label>Max Period</label>
+            <div className="filter-group">
+                <label>Max Period</label>
 
-    <div className="select-control">
-      <span className="select-icon" aria-hidden="true" />
-      <select value={toIndex} onChange={handleToChange}>
-        {availableToOptions.map((o) => (
-          <option key={o.index} value={o.index}>
-            {o.label}
-          </option>
-        ))}
-      </select>
-    </div>
-  </div>
-</div>
-
+                <div className="select-control">
+                    <span className="select-icon" aria-hidden="true" />
+                    <select value={toIndex} onChange={handleToChange}>
+                        {availableToOptions.map((o) => (
+                            <option key={o.index} value={o.index}>
+                                {o.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+        </div>
     );
 };

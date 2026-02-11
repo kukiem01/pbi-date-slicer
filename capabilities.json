@@ -1,16 +1,9 @@
 {
   "dataRoles": [
-    {
-      "displayName": "Text Category",
-      "name": "category",
-      "kind": "Grouping"
-    },
-    {
-      "displayName": "Sorting Index",
-      "name": "sortIndex",
-      "kind": "Measure"
-    }
-  ],
+  { "displayName": "Period Text", "name": "category", "kind": "Grouping" },
+  { "displayName": "Sorting Index", "name": "sortIndex", "kind": "Grouping" }
+]
+,
   "objects": {
     "general": {
       "displayName": "General",
@@ -23,28 +16,20 @@
       }
     }
   },
-  "dataViewMappings": [
-    {
-      "categorical": {
-        "categories": {
-          "for": {
-            "in": "category"
-          },
-          "dataReductionAlgorithm": {
-            "top": {}
-          }
-        },
-        "values": {
-          "select": [
-            {
-              "bind": {
-                "to": "sortIndex"
-              }
-            }
-          ]
-        }
+"dataViewMappings": [
+  {
+    "categorical": {
+      "categories": {
+        "select": [
+          { "for": { "in": "category" } },
+          { "for": { "in": "sortIndex" } }
+        ],
+        "dataReductionAlgorithm": { "top": {} }
       }
     }
-  ],
+  }
+]
+
+,
   "privileges": []
 }
