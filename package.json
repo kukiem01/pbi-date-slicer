@@ -1,10 +1,10 @@
 {
-  "name": "visual",
-  "description": "default_template_value",
-  "version": "1.0.0.0",
+  "name": "From-To Slicer",
+  "description": "Power BI custom visual for filtering ordered text categories with From-To selection.",
+  "version": "1.0.0.2",
   "repository": {
-    "type": "default_template_value",
-    "url": "default_template_value"
+    "type": "git",
+    "url": "https://github.com/kukiem01/pbi-date-slicer/"
   },
   "license": "MIT",
   "scripts": {

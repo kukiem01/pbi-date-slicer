@@ -1,7 +1,19 @@
 {
   "dataRoles": [
-    { "displayName": "Period Text", "name": "category", "kind": "Grouping" },
-    { "displayName": "Sorting Index", "name": "sortIndex", "kind": "Grouping" }
+    {
+      "displayName": "Period Text",
+      "name": "category",
+      "kind": "Grouping",
+      "description": "Text displayed in the dropdowns (for example month or period label).",
+      "requiredTypes": [{ "text": true }]
+    },
+    {
+      "displayName": "Sorting Index",
+      "name": "sortIndex",
+      "kind": "Grouping",
+      "description": "Numeric column used to sort the text values and define the range order.",
+      "requiredTypes": [{ "numeric": true }]
+    }
   ],
   "objects": {
     "general": {
@@ -125,26 +137,6 @@
             "bool": true
           }
         },
-        "controlWidth": {
-          "type": {
-            "numeric": true
-          }
-        },
-        "groupGap": {
-          "type": {
-            "numeric": true
-          }
-        },
-        "containerHorizontalPadding": {
-          "type": {
-            "numeric": true
-          }
-        },
-        "containerVerticalPadding": {
-          "type": {
-            "numeric": true
-          }
-        },
         "containerBackgroundColor": {
           "type": {
             "fill": {
@@ -159,6 +151,12 @@
   },
   "dataViewMappings": [
     {
+      "conditions": [
+        {
+          "category": { "min": 1, "max": 1 },
+          "sortIndex": { "min": 1, "max": 1 }
+        }
+      ],
       "categorical": {
         "categories": {
           "select": [

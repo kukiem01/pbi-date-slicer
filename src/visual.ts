@@ -50,9 +50,15 @@ export class Visual implements IVisual {
         }
 
         const fullQueryName = indexCategory.source.queryName;
-        const dotIdx = fullQueryName.indexOf(".");
-        const tableName = dotIdx > -1 ? fullQueryName.substring(0, dotIdx) : fullQueryName;
-        const columnName = indexCategory.source.displayName;
+        const dotIdx = fullQueryName?.lastIndexOf(".") ?? -1;
+
+        if (!fullQueryName || dotIdx < 1 || dotIdx === fullQueryName.length - 1) {
+            this.clear();
+            return;
+        }
+
+        const tableName = fullQueryName.substring(0, dotIdx);
+        const columnName = fullQueryName.substring(dotIdx + 1);
 
         const filterTarget: models.IFilterColumnTarget = {
             table: tableName,
@@ -68,19 +74,20 @@ export class Visual implements IVisual {
             }
 
             if (!uniqueMap.has(sortVal)) {
-                const selectionId = this.host.createSelectionIdBuilder()
-                    .withCategory(indexCategory, i)
-                    .createSelectionId();
-
                 uniqueMap.set(sortVal, {
                     label: String(categoryValue),
-                    index: sortVal,
-                    selectionId
+                    index: sortVal
                 });
             }
         });
 
         const rangeOptions = Array.from(uniqueMap.values()).sort((a, b) => a.index - b.index);
+
+        if (rangeOptions.length === 0) {
+            this.clear();
+            return;
+        }
+
         const styleSettings = this.getStyleSettings();
         const selectedIndexes = this.getSelectedIndexesFromFilter(options.jsonFilters, filterTarget);
 
@@ -89,7 +96,7 @@ export class Visual implements IVisual {
             styleSettings,
             selectedIndexes,
             onSelectionChanged: (selectedIndexes: number[]) => {
-                let filter: models.BasicFilter = null;
+                let filter: models.BasicFilter | null = null;
 
                 if (selectedIndexes?.length > 0) {
                     filter = new models.BasicFilter(
@@ -165,10 +172,12 @@ export class Visual implements IVisual {
             borderRadius: this.clampNumber(controls.borderRadius.value, 0, 24, defaultVisualStyleSettings.borderRadius),
             controlHeight: this.clampNumber(controls.controlHeight.value, 28, 80, defaultVisualStyleSettings.controlHeight),
             showIcon: layout.showIcon.value,
-            controlWidth: this.clampNumber(layout.controlWidth.value, 20, 800, defaultVisualStyleSettings.controlWidth),
-            groupGap: this.clampNumber(layout.groupGap.value, 0, 120, defaultVisualStyleSettings.groupGap),
-            containerHorizontalPadding: this.clampNumber(layout.containerHorizontalPadding.value, 0, 120, defaultVisualStyleSettings.containerHorizontalPadding),
-            containerVerticalPadding: this.clampNumber(layout.containerVerticalPadding.value, 0, 120, defaultVisualStyleSettings.containerVerticalPadding),
+            // Workaround for native select popup geometry caching in Power BI host WebView:
+            // keep dropdown anchor width/position stable by freezing layout controls.
+            controlWidth: defaultVisualStyleSettings.controlWidth,
+            groupGap: defaultVisualStyleSettings.groupGap,
+            containerHorizontalPadding: defaultVisualStyleSettings.containerHorizontalPadding,
+            containerVerticalPadding: defaultVisualStyleSettings.containerVerticalPadding,
             containerBackgroundColor: this.getColorValue(layout.containerBackgroundColor.value, defaultVisualStyleSettings.containerBackgroundColor)
         };
     }
