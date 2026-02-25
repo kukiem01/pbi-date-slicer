@@ -137,6 +137,26 @@
             "bool": true
           }
         },
+        "controlWidth": {
+          "type": {
+            "numeric": true
+          }
+        },
+        "groupGap": {
+          "type": {
+            "numeric": true
+          }
+        },
+        "containerHorizontalPadding": {
+          "type": {
+            "numeric": true
+          }
+        },
+        "containerVerticalPadding": {
+          "type": {
+            "numeric": true
+          }
+        },
         "containerBackgroundColor": {
           "type": {
             "fill": {
