@@ -21,10 +21,6 @@ export interface VisualStyleSettings {
     borderRadius: number;
     controlHeight: number;
     showIcon: boolean;
-    controlWidth: number;
-    groupGap: number;
-    containerHorizontalPadding: number;
-    containerVerticalPadding: number;
     containerBackgroundColor: string;
 }
 
@@ -43,10 +39,6 @@ export const defaultVisualStyleSettings: VisualStyleSettings = {
     borderRadius: 6,
     controlHeight: 44,
     showIcon: true,
-    controlWidth: 220,
-    groupGap: 16,
-    containerHorizontalPadding: 0,
-    containerVerticalPadding: 0,
     containerBackgroundColor: "transparent"
 };
 
@@ -164,30 +156,6 @@ class LayoutCardSettings extends FormattingSettingsCard {
         value: defaultVisualStyleSettings.showIcon
     });
 
-    controlWidth = new formattingSettings.NumUpDown({
-        name: "controlWidth",
-        displayName: "Dropdown width",
-        value: defaultVisualStyleSettings.controlWidth
-    });
-
-    groupGap = new formattingSettings.NumUpDown({
-        name: "groupGap",
-        displayName: "Gap between dropdowns",
-        value: defaultVisualStyleSettings.groupGap
-    });
-
-    containerHorizontalPadding = new formattingSettings.NumUpDown({
-        name: "containerHorizontalPadding",
-        displayName: "Horizontal padding",
-        value: defaultVisualStyleSettings.containerHorizontalPadding
-    });
-
-    containerVerticalPadding = new formattingSettings.NumUpDown({
-        name: "containerVerticalPadding",
-        displayName: "Vertical padding",
-        value: defaultVisualStyleSettings.containerVerticalPadding
-    });
-
     containerBackgroundColor = new formattingSettings.ColorPicker({
         name: "containerBackgroundColor",
         displayName: "Container background",
@@ -198,10 +166,6 @@ class LayoutCardSettings extends FormattingSettingsCard {
     displayName: string = "Layout";
     slices: Array<FormattingSettingsSlice> = [
         this.showIcon,
-        this.controlWidth,
-        this.groupGap,
-        this.containerHorizontalPadding,
-        this.containerVerticalPadding,
         this.containerBackgroundColor
     ];
 }

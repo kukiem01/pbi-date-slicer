@@ -15,6 +15,13 @@ export interface Props {
     onSelectionChanged: (values: number[]) => void;
 }
 
+const HARD_CODED_LAYOUT = {
+    controlWidthPx: 145,
+    groupGapPx: 3,
+    containerHorizontalPaddingPx: 0,
+    containerVerticalPaddingPx: 0
+} as const;
+
 const CalendarIcon: React.FC = () => (
     <span className="select-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" focusable="false">
@@ -79,6 +86,8 @@ export const RangeFilterComponent: React.FC<Props> = ({
     };
 
     const availableToOptions = options.filter(o => o.index >= fromIndex);
+    const descendingFromOptions = [...options].sort((a, b) => b.index - a.index);
+    const descendingToOptions = [...availableToOptions].sort((a, b) => b.index - a.index);
 
     const rootStyle = {
         "--rf-label-font-family": styleSettings.labelFontFamily,
@@ -92,10 +101,11 @@ export const RangeFilterComponent: React.FC<Props> = ({
         "--rf-accent-color": styleSettings.accentColor,
         "--rf-border-radius": `${styleSettings.borderRadius}px`,
         "--rf-control-height": `${styleSettings.controlHeight}px`,
-        "--rf-control-width": `${styleSettings.controlWidth}px`,
-        "--rf-group-gap": `${styleSettings.groupGap}px`,
-        "--rf-container-horizontal-padding": `${styleSettings.containerHorizontalPadding}px`,
-        "--rf-container-vertical-padding": `${styleSettings.containerVerticalPadding}px`,
+        // Hardcoded on purpose: native select popup geometry is unstable when layout width/gap/padding changes.
+        "--rf-control-width": `${HARD_CODED_LAYOUT.controlWidthPx}px`,
+        "--rf-group-gap": `${HARD_CODED_LAYOUT.groupGapPx}px`,
+        "--rf-container-horizontal-padding": `${HARD_CODED_LAYOUT.containerHorizontalPaddingPx}px`,
+        "--rf-container-vertical-padding": `${HARD_CODED_LAYOUT.containerVerticalPaddingPx}px`,
         "--rf-container-background": styleSettings.containerBackgroundColor
     } as React.CSSProperties;
 
@@ -117,7 +127,7 @@ export const RangeFilterComponent: React.FC<Props> = ({
                         value={fromIndex}
                         onChange={(event) => handleFromChange(Number(event.target.value))}
                     >
-                        {options.map((option) => (
+                        {descendingFromOptions.map((option) => (
                             <option key={option.index} value={option.index}>
                                 {option.label}
                             </option>
@@ -137,7 +147,7 @@ export const RangeFilterComponent: React.FC<Props> = ({
                         value={toIndex}
                         onChange={(event) => handleToChange(Number(event.target.value))}
                     >
-                        {availableToOptions.map((option) => (
+                        {descendingToOptions.map((option) => (
                             <option key={option.index} value={option.index}>
                                 {option.label}
                             </option>

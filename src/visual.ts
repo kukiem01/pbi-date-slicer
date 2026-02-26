@@ -172,12 +172,6 @@ export class Visual implements IVisual {
             borderRadius: this.clampNumber(controls.borderRadius.value, 0, 24, defaultVisualStyleSettings.borderRadius),
             controlHeight: this.clampNumber(controls.controlHeight.value, 28, 80, defaultVisualStyleSettings.controlHeight),
             showIcon: layout.showIcon.value,
-            // Workaround for native select popup geometry caching in Power BI host WebView:
-            // keep dropdown anchor width/position stable by freezing layout controls.
-            controlWidth: 145,
-            groupGap: 3,
-            containerHorizontalPadding: 0,
-            containerVerticalPadding: 0,
             containerBackgroundColor: this.getColorValue(layout.containerBackgroundColor.value, defaultVisualStyleSettings.containerBackgroundColor)
         };
     }
